@@ -1,4 +1,4 @@
-import { CodigoVerificacionDto } from '../dto/codigo-verificacion.dto';
+import { CodigoVerificacionDto } from '../dto/templates/codigo-verificacion.dto';
 
 export async function codigoVerificacionUsuario(
   cuerpo: CodigoVerificacionDto,

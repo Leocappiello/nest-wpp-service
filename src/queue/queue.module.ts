@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { QueueService } from './queue.service';
 import { BullModule } from '@nestjs/bull';
-import { MESSAGE_QUEUE } from './constants';
 import { MessageConsumer } from './messageQueue.consumer';
+import { queueConfig } from './config';
 
 @Module({
   imports: [
-    BullModule.forRoot({
+    /* BullModule.forRoot({
       redis: {
         host: process.env.REDIS_URL || 'localhost',
         port: Number(process.env.REDIS_PORT) || 6379,
@@ -14,7 +14,8 @@ import { MessageConsumer } from './messageQueue.consumer';
     }),
     BullModule.registerQueue({
       name: MESSAGE_QUEUE,
-    }),
+    }), */
+    BullModule.registerQueue(queueConfig),
   ],
   providers: [QueueService, MessageConsumer],
 })

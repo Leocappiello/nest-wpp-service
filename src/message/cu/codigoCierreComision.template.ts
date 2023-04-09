@@ -1,4 +1,4 @@
-import { CodigoVerificacionCierreComisionDto } from '../dto/codigo-verificacion-cierre-comision.dto';
+import { CodigoVerificacionCierreComisionDto } from '../dto/templates/codigo-verificacion-cierre-comision.dto';
 
 export async function codigoCierreComision(
   cuerpo: CodigoVerificacionCierreComisionDto,

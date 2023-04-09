@@ -7,12 +7,13 @@ import { MessageService } from './message/message.service';
 import { MessageModule } from './message/message.module';
 import { QueueModule } from './queue/queue.module';
 //import { ScheduleModule } from '@nestjs/schedule';
+import { SocketModule } from './socket/io/socket.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MessageModule,
-    QueueModule,
+    /* QueueModule, */
     //ScheduleModule, // automatic tasks module
   ],
   controllers: [AppController, MessageController],

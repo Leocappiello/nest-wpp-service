@@ -1,4 +1,4 @@
-import { ExamenFinalDto } from '../dto';
+import { ExamenFinalDto } from '../dto/templates';
 
 export async function enviarNotificacionExamenFinal(
   cuerpo: ExamenFinalDto,
