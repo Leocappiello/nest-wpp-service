@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { actions } from './actions';
 import { HttpCustomService } from 'src/providers/http/http.service';
+import { IoService } from 'src/socket/io/io.service';
+import { MESSAGES } from './messages';
 
 @Injectable()
 export class MessageService {
@@ -11,7 +13,11 @@ export class MessageService {
   headers = { 'Content-Type': 'application/json' };
   urlPost = this.url + this.id + this.access_token + this.token;
 
-  constructor(private readonly httpService: HttpCustomService) {}
+  constructor(
+    @Inject(IoService)
+    private readonly ioService: IoService,
+    private readonly httpService: HttpCustomService,
+  ) {}
 
   async action(action: string, dataAction: any) {
     const templates = [];
@@ -42,10 +48,26 @@ export class MessageService {
     };
     //console.log(dataMessage);
     const { status, data, config } = await this.httpService.postMessage(
-      url,
+      this.urlPost,
       dataMessage,
     );
-    console.log(config.data);
-    return { status, data };
+    this.ioService.emitMessage(MESSAGES.messageSent, { config, status, data });
+    //console.log(config.data);
+    return { status, data, config };
+  }
+
+  async sendMessageWTemplate(message: any) {
+    const { status, data, config } = await this.httpService.postMessage(
+      this.urlPost,
+      message,
+    );
+    this.ioService.emitMessage(MESSAGES.messageSent, { config, status, data });
+    console.log(config);
+    return { config, status, data };
+  }
+
+  async emitMessage(messageType: string, data: any) {
+    console.log('data desde emit', data);
+    this.ioService.emitMessage(MESSAGES[messageType], data);
   }
 }

@@ -3,5 +3,6 @@ import { IoService } from './io.service';
 
 @Module({
   providers: [IoService],
+  exports: [IoService],
 })
-export class SocketModule {}
+export class IoModule {}

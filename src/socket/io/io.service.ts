@@ -3,25 +3,28 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
 @Injectable()
-@WebSocketGateway(/* 81, {
-  namespace: 'messages',
-  cors: {
-    origin: ['*'],
-  },
-} */)
+@WebSocketGateway()
 export class IoService implements OnModuleInit {
+  constructor() {
+    console.log('iniciado el io service');
+  }
+
   @WebSocketServer()
   server: Server;
 
   onModuleInit() {
     this.server.on('connection', (socket) => {
       console.log('Connected !', socket.id);
-      this.emitMessage();
+      this.greeting();
     });
   }
 
-  emitMessage() {
-    console.log('emitiendo saludo !');
+  greeting() {
     this.server.emit('message', { saludo: 'hola' });
+  }
+
+  emitMessage(message: string, data: any) {
+    console.log('message:', message);
+    this.server.send(message, data);
   }
 }

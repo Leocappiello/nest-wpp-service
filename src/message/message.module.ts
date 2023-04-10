@@ -5,15 +5,15 @@ import { MessageGuard } from './message.guard';
 //import { QueueRepository } from 'src/queue/queue.repository';
 import { HttpModule } from '@nestjs/axios/dist';
 import { ProvidersModule } from 'src/providers/providers.module';
-import { SocketModule } from 'src/socket/io/socket.module';
+import { IoModule } from 'src/socket/io/io.module';
 
 @Module({
-  imports: [HttpModule, ProvidersModule],
+  imports: [HttpModule, ProvidersModule, IoModule],
   controllers: [MessageController],
   providers: [
     MessageService,
-    MessageGuard /* , QueueRepository */,
-    SocketModule,
+    MessageGuard,
+    /* , QueueRepository */
   ],
 })
 export class MessageModule {}
